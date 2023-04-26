@@ -7,6 +7,21 @@ body {
 			#556775 100%);
 }
 
+.header {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-left: auto;
+	margin-right: auto;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 10;
+	width: 100%;
+	padding: 0 0 20px 0;
+	transition: background-color 300ms ease-out, backdrop-filter 300ms ease-out;
+}
+
 .search-form {
 	margin-bottom: 20px;
 	padding: 20px;
@@ -176,36 +191,36 @@ body {
 	overflow: hidden;
 }
 
-.to-top {
-	position: fixed;
-	bottom: 5%;
-	right: 5%;
+// .to-top {
+// 	position: fixed;
+// 	bottom: 5%;
+// 	right: 5%;
 
-	display: flex;
-	align-items: center;
-	justify-content: center;
+// 	display: flex;
+// 	align-items: center;
+// 	justify-content: center;
 
-	width: 70px;
-	height: 70px;
+// 	width: 70px;
+// 	height: 70px;
 
-	text-decoration: none;
-	color: #fff;
-	background-color: rgba(140, 160, 185, 8);
-	border-radius: 50%;
-	opacity: 0.6;
-	box-shadow: 2px 1px 3px 0px rgba(0, 0, 0, 0.3);
+// 	text-decoration: none;
+// 	color: #fff;
+// 	background-color: rgba(140, 160, 185, 8);
+// 	border-radius: 50%;
+// 	opacity: 0.6;
+// 	box-shadow: 2px 1px 3px 0px rgba(0, 0, 0, 0.3);
 
-	cursor: pointer;
-	animation: drag 2000ms ease-in-out infinite;
+// 	cursor: pointer;
+// 	animation: drag 2000ms ease-in-out infinite;
 
-	transition: all 350ms ease-in-out;
+// 	transition: all 350ms ease-in-out;
 
-	&:hover,
-	&:focus {
-		opacity: 1;
-		animation-play-state: paused;
-	}
-}
+// 	&:hover,
+// 	&:focus {
+// 		opacity: 1;
+// 		animation-play-state: paused;
+// 	}
+// }
 
 @keyframes drag {
 	0% {
@@ -220,3 +235,4 @@ body {
 		transform: translateY(30%);
 	}
 }
+

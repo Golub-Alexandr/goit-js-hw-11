@@ -160,14 +160,14 @@ function createGalleryMarkup(images) {
    refs.galleryContainer.insertAdjacentHTML('beforeend', markup);
 }
 
-function onScrollToTopBtn() {
-   const offsetTrigger = 100;
-   const pageOffset = window.pageYOffset;
+// function onScrollToTopBtn() {
+//    const offsetTrigger = 100;
+//    const pageOffset = window.pageYOffset;
 
-   pageOffset > offsetTrigger
-      ? refs.toTopBtn.classList.remove('is-hidden')
-      : refs.toTopBtn.classList.add('is-hidden');
-}
+//    pageOffset > offsetTrigger
+//       ? refs.toTopBtn.classList.remove('is-hidden')
+//       : refs.toTopBtn.classList.add('is-hidden');
+// }
 
 function onTopScroll() {
    window.scrollTo({
