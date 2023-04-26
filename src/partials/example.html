@@ -1,11 +1,11 @@
-<article class="example" id="uk">
-  <h1>HTML-partials</h1>
+<!-- <article class="example" id="uk">
+  <h1>HTML-partials</h1> -->
 
   <!--
     ❗️❗️❗️ The path to images from the HTML partial
     is the same as from the index.html file
   -->
-  <img src="images/logo.png" alt="" width="320" />
+  <!-- <img src="images/logo.png" alt="" width="320" />
 
   <p>
     The
@@ -34,4 +34,21 @@
   </p>
 
   <div class="background"></div>
-</article>
+</article> -->
+<form class="search-form" id="search-form">
+      <input
+        class="search-form__input"
+        type="text"
+        name="searchQuery"
+        autocomplete="off"
+        placeholder="Search images..."
+      />
+      <button class="search-form__btn" type="submit">Search</button>
+    </form>
+
+    <div class="gallery"></div>
+    <div class="wrapper"></div>
+    <!-- <button type="button" class="load-more">
+      <span class="load-more__text">Load more</span>
+    </button> -->
+    <a class="to-top is-hidden">TOP</a>
