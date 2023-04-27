@@ -21,16 +21,12 @@ export default class ImagesApiService {
          per_page: 40,
       });
 
-   const url = `${BASE_URL}?${searchParams}`;
+      const url = `${BASE_URL}?${searchParams}`;
 
-	try {
       const response = await axios.get(url);
       this.incrementPage();
 
       return response.data;
-   } catch (error) {
-		console.warn(`${error}`);
-      }
    }
 
    incrementLoadedHits(hits) {
