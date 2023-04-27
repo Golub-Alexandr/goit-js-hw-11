@@ -6,24 +6,13 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 const refs = {
   galleryContainer: document.querySelector('.gallery'),
   searchForm: document.querySelector('.search-form'),
-  wrapper: document.querySelector('.wrapper'),
 };
 
 const imagesApiService = new ImagesApiService();
 const gallery = new SimpleLightbox('.gallery a');
 
-// Set options for the IntersectionObserver API
-const optionsForObserver = {
-  rootMargin: '250px', // Trigger the callback function when the target element is within 250px of the viewport
-};
-
-// Create a new IntersectionObserver instance with the callback function and the options
-// const observer = new IntersectionObserver(onEntry, optionsForObserver);
-
 // Attach event listeners
 refs.searchForm.addEventListener('submit', onSearch);
-// refs.toTopBtn.addEventListener('click', onTopScroll);
-// window.addEventListener('scroll', onScrollToTopBtn);
 
 async function onSearch(e) {
   e.preventDefault();
@@ -49,9 +38,6 @@ async function onSearch(e) {
       return erorrQuery();
     }
 
-    // Observe the wrapper element
-    // observer.observe(refs.wrapper);
-
     // Increment the number of loaded hits and create the gallery markup
     imagesApiService.incrementLoadedHits(hits);
     createGalleryMarkup(hits);
@@ -61,37 +47,11 @@ async function onSearch(e) {
     gallery.refresh();
 
     if (hits.length === totalHits) {
-      // If all hits have been loaded, unobserve the wrapper element and show an info message
-      observer.unobserve(refs.wrapper);
+      // If all hits have been loaded, show an info message
       // endOfSearch();
     }
   } catch (error) {
     console.warn(`${error}`);
-  }
-
-  // Unobserve the wrapper element
-  observer.unobserve(refs.wrapper);
-}
-
-async function onEntry(entries) {
-  for (const entry of entries) {
-    if (entry.isIntersecting && imagesApiService.query) {
-      // If the target element is within the viewport and there is a search query, fetch more images
-      const { hits, totalHits } = await imagesApiService.fetchImages();
-
-      // Increment the number of loaded hits and create the gallery markup
-      imagesApiService.incrementLoadedHits(hits);
-      createGalleryMarkup(hits);
-      smoothScrollGallery();
-      gallery.refresh();
-
-      if (imagesApiService.loadedHits >= totalHits) {
-        // If all hits have been loaded, unobserve the wrapper element and show an info message
-        observer.unobserve(refs.wrapper);
-        endOfSearch();
-        return;
-      }
-    }
   }
 }
 
@@ -105,7 +65,6 @@ window.addEventListener('scroll', async () => {
     // Increment the number of loaded hits and create the gallery markup
     imagesApiService.incrementLoadedHits(hits);
     createGalleryMarkup(hits);
-    smoothScrollGallery();
     gallery.refresh();
 
     if (imagesApiService.loadedHits >= totalHits) {
@@ -136,8 +95,8 @@ function clearGelleryContainer() {
 }
 
 function createGalleryMarkup(images) {
-    // Map through each image in the array and return a string with the HTML markup for each photo card
-    const markup = images
+  // Map through each image in the array and return a string with the HTML markup for each photo card
+  const markup = images
       .map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
           return `
       <div class="photo-card">
