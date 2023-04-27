@@ -18,7 +18,7 @@ const optionsForObserver = {
 };
 
 // Create a new IntersectionObserver instance with the callback function and the options
-const observer = new IntersectionObserver(onEntry, optionsForObserver);
+// const observer = new IntersectionObserver(onEntry, optionsForObserver);
 
 // Attach event listeners
 refs.searchForm.addEventListener('submit', onSearch);
@@ -50,7 +50,7 @@ async function onSearch(e) {
     }
 
     // Observe the wrapper element
-    observer.observe(refs.wrapper);
+    // observer.observe(refs.wrapper);
 
     // Increment the number of loaded hits and create the gallery markup
     imagesApiService.incrementLoadedHits(hits);
