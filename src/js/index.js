@@ -42,6 +42,19 @@ async function onSearch(e) {
     imagesApiService.incrementLoadedHits(hits);
     createGalleryMarkup(hits);
 
+    // Check if the height of the gallery container is less than the viewport height
+    const { height: galleryHeight } = refs.galleryContainer.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+
+    if (galleryHeight < windowHeight) {
+      // Fetch another set of 40 photos
+      const { hits: newHits } = await imagesApiService.fetchImages();
+
+    // Increment the number of loaded hits and create the gallery markup
+      imagesApiService.incrementLoadedHits(newHits);
+      createGalleryMarkup(newHits);
+    }
+
     // Show a success message and refresh the lightbox gallery
     accessQuery(totalHits);
     gallery.refresh();
