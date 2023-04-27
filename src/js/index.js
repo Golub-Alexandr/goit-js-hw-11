@@ -151,20 +151,25 @@ function createGalleryMarkup(images) {
     refs.galleryContainer.insertAdjacentHTML('beforeend', markup);
 }
 
+window.addEventListener('scroll', onWindowScroll);
 
-function onTopScroll() {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+function onWindowScroll() {
+  const scrollPosition = window.innerHeight + window.scrollY;
+  const documentHeight = document.documentElement.offsetHeight;
+
+  if (scrollPosition >= documentHeight) {
+    smoothScrollGallery();
+  }
 }
 
 function smoothScrollGallery() {
-    const { height } = refs.galleryContainer.firstElementChild.getBoundingClientRect();
+  const galleryContainer = document.querySelector('.gallery-container');
+  const { height } = galleryContainer.firstElementChild.getBoundingClientRect();
 
-    window.scrollBy({
-      top: height * 2,
-      behavior: 'smooth',
-    });
+  window.scrollBy({
+    top: height * 2,
+    behavior: 'smooth',
+  });
 }
+
 
