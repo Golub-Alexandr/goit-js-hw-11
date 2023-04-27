@@ -151,7 +151,17 @@ function createGalleryMarkup(images) {
     refs.galleryContainer.insertAdjacentHTML('beforeend', markup);
 }
 
-window.addEventListener('scroll', onWindowScroll);
+window.addEventListener('scroll', debounce(onWindowScroll, 200));
+
+
+function debounce(fn, delay) {
+  let timeoutId;
+  return function(...args) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => fn.apply(this, args), delay);
+  };
+}
+
 
 function onWindowScroll() {
   const scrollPosition = window.innerHeight + window.scrollY;
