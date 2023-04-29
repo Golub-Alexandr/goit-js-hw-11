@@ -11,6 +11,9 @@ const refs = {
 const imagesApiService = new ImagesApiService();
 const gallery = new SimpleLightbox('.gallery a');
 
+
+let scrollListener = null;
+
 // Attach event listeners
 refs.searchForm.addEventListener('submit', onSearch);
 
@@ -50,7 +53,7 @@ async function onSearch(e) {
       // Fetch another set of 40 photos
       const { hits: newHits } = await imagesApiService.fetchImages();
 
-    // Increment the number of loaded hits and create the gallery markup
+      // Increment the number of loaded hits and create the gallery markup
       imagesApiService.incrementLoadedHits(newHits);
       createGalleryMarkup(newHits);
     }
@@ -59,31 +62,34 @@ async function onSearch(e) {
     accessQuery(totalHits);
     gallery.refresh();
 
-    if (hits.length === totalHits) {
-      // If all hits have been loaded, show an info message
-      // endOfSearch();
+    // Remove the scroll listener if it exists
+    if (scrollListener) {
+      window.removeEventListener('scroll', scrollListener);
     }
+
+    // Add a new scroll listener
+    scrollListener = async function () {
+      const scrollPosition = window.innerHeight + window.scrollY;
+      const documentHeight = document.documentElement.offsetHeight;
+      if (scrollPosition >= documentHeight && imagesApiService.query && !imagesApiService.isLoading) {
+        const { hits, totalHits } = await imagesApiService.fetchImages();
+        imagesApiService.incrementLoadedHits(hits);
+        createGalleryMarkup(hits);
+        gallery.refresh();
+
+        if (imagesApiService.loadedHits >= totalHits) {
+          // Remove the scroll listener
+          window.removeEventListener('scroll', scrollListener);
+          endOfSearch();
+        }
+      }
+    };
+
+    window.addEventListener('scroll', scrollListener);
   } catch (error) {
     console.warn(`${error}`);
   }
 }
-
-window.addEventListener('scroll', async function scrollListener() {
-  const scrollPosition = window.innerHeight + window.scrollY;
-  const documentHeight = document.documentElement.offsetHeight;
-  if (scrollPosition >= documentHeight && imagesApiService.query && !imagesApiService.isLoading) {
-    const { hits, totalHits } = await imagesApiService.fetchImages();
-    imagesApiService.incrementLoadedHits(hits);
-    createGalleryMarkup(hits);
-    gallery.refresh();
-
-    if (imagesApiService.loadedHits >= totalHits) {
-      // Remove the scroll listener
-      window.removeEventListener('scroll', scrollListener);
-      endOfSearch();
-    }
-  }
-});
 
 function accessQuery(totalHits) {
   // Show a success message with the total number of hits
