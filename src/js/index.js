@@ -68,20 +68,18 @@ async function onSearch(e) {
   }
 }
 
-window.addEventListener('scroll', async () => {
+window.addEventListener('scroll', async function scrollListener() {
   const scrollPosition = window.innerHeight + window.scrollY;
   const documentHeight = document.documentElement.offsetHeight;
   if (scrollPosition >= documentHeight && imagesApiService.query && !imagesApiService.isLoading) {
-    // If the user has scrolled to the bottom of the page and there is a search query, fetch more images
     const { hits, totalHits } = await imagesApiService.fetchImages();
-
-    // Increment the number of loaded hits and create the gallery markup
     imagesApiService.incrementLoadedHits(hits);
     createGalleryMarkup(hits);
     gallery.refresh();
 
     if (imagesApiService.loadedHits >= totalHits) {
-      // If all hits have been loaded, show an info message
+      // Remove the scroll listener
+      window.removeEventListener('scroll', scrollListener);
       endOfSearch();
     }
   }
